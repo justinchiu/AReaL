@@ -18,7 +18,7 @@ allocation_mode: d2p2t2
 model:
   experiment_name: ${experiment_name}
   trial_name: ${trial_name}
-  path: Qwen/Qwen3-1.7B
+  path: Qwen/Qwen3-14B
   init_from_scratch: false
   gradient_checkpointing: false
   dtype: bfloat16
