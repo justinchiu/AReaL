@@ -189,3 +189,7 @@ wandb/
 outputs/
 sympy/
 !/docs/figures/*
+
+# DATA
+data/comb_opt/
+data/frontierco/
