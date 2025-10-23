@@ -19,8 +19,6 @@ from examples.frontierco.reward import frontierco_reward_fn
 def main(args):
     # Use eval-specific config by default if not overridden
     if '--config' not in ' '.join(args):
-        import os
-
         default_config = os.path.join(
             os.path.dirname(__file__), 'frontierco_eval_config.yaml'
         )
@@ -39,8 +37,9 @@ def main(args):
     seeding.set_random_seed(config.seed, key=f"trainer{rank}")
 
     # Create dataset and dataloaders
+    # Note: Using "train" split as OR-Instruct-Data-3K doesn't have a separate test split
     valid_dataset = get_custom_dataset(
-        split="test", dataset_config=config.valid_dataset, tokenizer=tokenizer
+        split="train", dataset_config=config.valid_dataset, tokenizer=tokenizer
     )
     valid_dataloader = create_dataloader(
         valid_dataset,
