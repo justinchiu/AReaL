@@ -1,8 +1,6 @@
 #!/bin/bash
 # Train SFT models on GSM8K with strict hash format
 
-set -e
-
 echo "=========================================="
 echo "Training Qwen3-1.7B SFT"
 echo "=========================================="
