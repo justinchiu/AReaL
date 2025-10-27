@@ -1,6 +1,7 @@
 import json
 import multiprocessing
 import re
+from enum import StrEnum
 from typing import List, Union
 
 import regex
@@ -14,6 +15,12 @@ from word2number import w2n
 from areal.utils import logging
 
 logger = logging.getLogger("math parser")
+
+
+class AnswerFormat(StrEnum):
+    """Format for answer extraction in math problems."""
+    AUTO = "auto"  # Try all formats (permissive, backward compatible)
+    STRICT_HASH = "strict_hash"  # Only accept #### {answer} format
 
 # units mainly from MathQA
 unit_texts = [
@@ -357,13 +364,23 @@ def strip_string(string, skip_unit=False):
     return string
 
 
-def extract_answer(pred_str, data_name, use_last_number=True):
+def extract_answer(pred_str, data_name, use_last_number=True, format: AnswerFormat = AnswerFormat.AUTO):
     pred_str = pred_str.replace("\u043a\u0438", "")
     if data_name in ["mmlu_stem", "sat_math", "aqua", "gaokao2023"]:
         # TODO check multiple choice
         return choice_answer_clean(pred_str)
 
-    if "final answer is $" in pred_str and "$. I hope" in pred_str:
+    # STRICT_HASH mode: Only accept #### format
+    if format == AnswerFormat.STRICT_HASH:
+        if "####" in pred_str:
+            pred = pred_str.split("####")[-1].strip()
+            # Remove {answer} placeholder if present
+            pred = re.sub(r"^\{answer\}\s*", "", pred)
+        else:
+            # No reward if #### format is not used
+            pred = ""
+        # Skip to postprocessing
+    elif "final answer is $" in pred_str and "$. I hope" in pred_str:
         # minerva_math
         tmp = pred_str.split("final answer is $", 1)[1]
         pred = tmp.split("$. I hope", 1)[0].strip()
@@ -761,11 +778,11 @@ def symbolic_equal(a, b):
     return False
 
 
-def process_results(answer, solution):
+def process_results(answer, solution, format: AnswerFormat = AnswerFormat.AUTO):
 
     try:
-        extracted_answer = extract_answer(answer, "math", use_last_number=False)
-        extracted_solution = extract_answer(solution, "math", use_last_number=True)
+        extracted_answer = extract_answer(answer, "math", use_last_number=False, format=format)
+        extracted_solution = extract_answer(solution, "math", use_last_number=True, format=format)
 
         # if extract_answer.strip() == "":
         #     print (answer)
