@@ -4,7 +4,7 @@
 set -e
 
 echo "=========================================="
-echo "Training Qwen3-1.7B GRPO"
+echo "Training Qwen3-1.7B GRPO (strict hash)"
 echo "=========================================="
 python3 -m areal.launcher.local \
   examples/math/gsm8k_grpo_megatron.py \
@@ -14,11 +14,12 @@ python3 -m areal.launcher.local \
   rollout.max_head_offpolicyness=4 \
   train_dataset.batch_size=64 \
   gconfig.n_samples=16 \
-  experiment_name=gsm8k-grpo
+  experiment_name=gsm8k-grpo \
+  trial_name=strict-hash
 
 echo ""
 echo "=========================================="
-echo "Training Qwen3-8B GRPO"
+echo "Training Qwen3-8B GRPO (strict hash)"
 echo "=========================================="
 python3 -m areal.launcher.local \
   examples/math/gsm8k_grpo_megatron.py \
@@ -28,7 +29,8 @@ python3 -m areal.launcher.local \
   rollout.max_head_offpolicyness=4 \
   train_dataset.batch_size=64 \
   gconfig.n_samples=16 \
-  experiment_name=gsm8k-grpo-8b
+  experiment_name=gsm8k-grpo-8b \
+  trial_name=strict-hash
 
 echo ""
 echo "=========================================="
