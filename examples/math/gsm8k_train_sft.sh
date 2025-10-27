@@ -9,7 +9,7 @@ echo "=========================================="
 python3 -m areal.launcher.local \
   examples/math/gsm8k_sft_megatron.py \
   --config examples/math/gsm8k_sft_megatron.yaml \
-  actor.path=Qwen/Qwen3-1.7B \
+  model.path=Qwen/Qwen3-1.7B \
   experiment_name=gsm8k-sft-megatron \
   trial_name=trial0
 
@@ -20,7 +20,7 @@ echo "=========================================="
 python3 -m areal.launcher.local \
   examples/math/gsm8k_sft_megatron.py \
   --config examples/math/gsm8k_sft_megatron.yaml \
-  actor.path=Qwen/Qwen3-8B \
+  model.path=Qwen/Qwen3-8B \
   experiment_name=gsm8k-sft-megatron-8b \
   trial_name=trial0
 
