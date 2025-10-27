@@ -376,6 +376,10 @@ def extract_answer(pred_str, data_name, use_last_number=True, format: AnswerForm
             pred = pred_str.split("####")[-1].strip()
             # Remove {answer} placeholder if present
             pred = re.sub(r"^\{answer\}\s*", "", pred)
+            # Remove chat template end tokens
+            pred = pred.split("<|im_end|>")[0].strip()
+            pred = pred.split("<|end|>")[0].strip()
+            pred = pred.split("</s>")[0].strip()
         else:
             # No reward if #### format is not used
             pred = ""
