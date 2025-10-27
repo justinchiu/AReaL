@@ -395,6 +395,11 @@ def extract_answer(pred_str, data_name, use_last_number=True):
     elif "答案是" in pred_str:
         # Handle Chinese few-shot multiple choice problem answer extraction
         pred = pred_str.split("答案是")[1].strip().split("\n\n")[0].strip()
+    elif "####" in pred_str:
+        # Handle GSM8K format: #### answer or #### {answer}
+        pred = pred_str.split("####")[-1].strip()
+        # Remove {answer} placeholder if present
+        pred = re.sub(r"^\{answer\}\s*", "", pred)
     else:  # use the last number
         if use_last_number:
             pattern = "-?\d*\.?\d+"

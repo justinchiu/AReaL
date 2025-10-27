@@ -23,7 +23,6 @@ def gsm8k_reward_fn(prompt, completions, prompt_ids, completion_ids, answer, **k
 def main(args):
     # Use eval-specific config by default if not overridden
     if '--config' not in ' '.join(args):
-        import os
         default_config = os.path.join(
             os.path.dirname(__file__), 'gsm8k_eval_config.yaml'
         )
