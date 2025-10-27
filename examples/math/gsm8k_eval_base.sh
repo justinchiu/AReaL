@@ -1,8 +1,6 @@
 #!/bin/bash
 # Evaluate base models on GSM8K with strict hash format
 
-set -e
-
 echo "=========================================="
 echo "Evaluating Qwen3-1.7B Base"
 echo "=========================================="
