@@ -1,8 +1,6 @@
 #!/bin/bash
 # Train GRPO models on GSM8K with strict hash format
 
-set -e
-
 echo "=========================================="
 echo "Training Qwen3-1.7B GRPO (strict hash)"
 echo "=========================================="
@@ -14,6 +12,7 @@ python3 -m areal.launcher.local \
   rollout.max_head_offpolicyness=4 \
   train_dataset.batch_size=64 \
   gconfig.n_samples=16 \
+  total_train_epochs=3 \
   experiment_name=gsm8k-grpo \
   trial_name=strict-hash
 
@@ -29,6 +28,7 @@ python3 -m areal.launcher.local \
   rollout.max_head_offpolicyness=4 \
   train_dataset.batch_size=64 \
   gconfig.n_samples=16 \
+  total_train_epochs=3 \
   experiment_name=gsm8k-grpo-8b \
   trial_name=strict-hash
 

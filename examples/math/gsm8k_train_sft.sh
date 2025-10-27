@@ -26,6 +26,17 @@ python3 -m areal.launcher.local \
 
 echo ""
 echo "=========================================="
+echo "Training Qwen3-8B SFT"
+echo "=========================================="
+python3 -m areal.launcher.local \
+  examples/math/gsm8k_sft_megatron.py \
+  --config examples/math/gsm8k_sft_megatron.yaml \
+  model.path=Qwen/Qwen3-14B \
+  experiment_name=gsm8k-sft-megatron-14b \
+  trial_name=trial0
+
+echo ""
+echo "=========================================="
 echo "SFT Training Complete!"
 echo "=========================================="
 echo "Checkpoints:"
