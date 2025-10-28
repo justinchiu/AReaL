@@ -43,10 +43,18 @@ python3 -m areal.launcher.local \
   async_training=true \
   rollout.max_head_offpolicyness=4 \
   train_dataset.batch_size=32 \
-  gconfig.n_samples=16 \
+  gconfig.n_samples=32 \
   total_train_epochs=3 \
   allocation_mode=sglang.d4p1t1+d1p2t2 \
   experiment_name=gsm8k-grpo-14b \
+  +actor.use_lora=true \
+  +actor.lora_rank=32 \
+  +actor.lora_alpha=16 \
+  +actor.peft_type=lora \
+  +actor.target_modules=[all] \
+  +sglang.enable_lora=true \
+  +sglang.max_lora_rank=32 \
+  +sglang.lora_target_modules=[all] \
   trial_name=strict-hash
 
 echo ""
